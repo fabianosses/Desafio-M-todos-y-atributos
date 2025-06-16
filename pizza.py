@@ -1,72 +1,58 @@
+import ingredientes
+
 class Pizza:
 
-    masas = {
-        1: {"Nombre": "Tradicional"},
-        2: {"Nombre": "Delgada"}
-    }
+# métodos de clases
+  precio = 10000
+  tipo = "Tamaño Familiar"
 
-    proteinas = {
-        1 : {"Nombre": "Pollo"},
-        2 : {"Nombre": "Vacuno"},
-        3 : {"Nombre": "Carne vegetal"}
-    }
+# método estático de validación de masa, proteina y vegetal
+  @staticmethod
+  def validar_elemento_en_lista(elemento, lista):
+    return elemento in lista
 
-    vegetales = {
-        1: {"Nombre": "Tomate"}, 
-        2: {"Nombre": "Aceitunas"},
-        3: {"Nombre": "Champiñones"}
-    }
+# método no estático 
+  def pedido(self, masa, proteico, *vegetales):
+    self.masa = masa
+    self.proteico = proteico
+    self.vegetales = vegetales
+    self.ingredientes = [self.proteico, *self.vegetales, self.masa]
+    return self.ingredientes
 
-    def validate(opciones, eleccion):
-        # Definir validación de eleccion
-        ##########################################################################
-        while eleccion not in opciones:
-            print("Opción no válida, ingrese una de las opciones válidas: ")
-            eleccion = input("Ingresa una Opción: ").lower()
-        ##########################################################################
-        return eleccion
+mi_pizza = Pizza()
 
+# solicita ingreso de proteina
+proteico_seleccionado = None
+while proteico_seleccionado not in ingredientes.proteicos:
+  proteico_seleccionado = input(f"Seleccione el ingrediente proteico {ingredientes.proteicos}: ")
+  if not Pizza.validar_elemento_en_lista(proteico_seleccionado, ingredientes.proteicos):
+    print("Ingrediente proteico no válido. Por favor, seleccione de la lista.")
 
-    def pedido():
-        pass
+# solicita ingreso de dos vegetales
+vegetales_seleccionados = []
+while len(vegetales_seleccionados) < 2:
+  vegetal_seleccionado = input(f"Seleccione un ingrediente vegetal {ingredientes.vegetales} ({len(vegetales_seleccionados) + 1} de 2): ")
+  if Pizza.validar_elemento_en_lista(vegetal_seleccionado, ingredientes.vegetales):
+    if vegetal_seleccionado not in vegetales_seleccionados:
+      vegetales_seleccionados.append(vegetal_seleccionado)
+    else:
+      print("Este vegetal ya ha sido seleccionado.")
+  else:
+    print("Ingrediente vegetal no válido. Por favor, seleccione de la lista.")
 
-    # método pedido de masa
-masa = input("""
-    Elige masa:
-    1. Tradicional.
-    2. Delgada.
-    """)
-        
-        # validación de datos ingresados
-masa = Pizza.validate(["1","2"], masa)
-print(type(masa),f"N°: {masa}")
-masa = Pizza.masas[int(masa)]
-print(f"tu proteina: {masa}")
+# solicita ingreso de masa
+masa_seleccionada = None
+while masa_seleccionada not in ingredientes.masas:
+  masa_seleccionada = input(f"Seleccione el tipo de masa {ingredientes.masas}: ")
+  if not Pizza.validar_elemento_en_lista(masa_seleccionada, ingredientes.masas):
+    print("Masa no válida. Por favor, seleccione de la lista.")
+mi_pizza.pedido(masa_seleccionada, proteico_seleccionado, *vegetales_seleccionados)
 
-    # método pedido de proteina
-proteina = input("""
-    Elige el sabor proteina:
-    1. Pollo.
-    2. Vacuno.
-    3. Carne vegetal.
-    """)
-print(type(proteina),f"N°: {proteina}")
-        # validación de datos ingresados
-proteina = Pizza.validate(["1", "2", "3"],proteina)
-proteina = Pizza.proteinas[int(proteina)]
-print(f"tu proteina: {proteina}")
-
-
-    # método pedido de vegetales
-vegetal = input("""
-    Elige los vegetales:
-    1. Tomate.
-    2. Aceitunas.
-    3. Champiñones.
-    """)
-        #validación de datos ingresados
-vegetal = Pizza.validate(["1","2","3"], vegetal)
-print(type(vegetal),f"N°: {vegetal}")
-vegetal = Pizza.vegetales[int(vegetal)]
-print(f"tu proteina: {vegetal}")
-
+# imprime selección de masa, proteina, vegetales, resumen de ingredientes, precio y tamaño
+print("\n--- Resumen de su Pedido ---")
+print(f"Masa seleccionada: {mi_pizza.masa}")
+print(f"Ingrediente proteico: {mi_pizza.proteico}")
+print(f"Ingredientes vegetales: {mi_pizza.vegetales}")
+print(f"Ingredientes totales: {mi_pizza.ingredientes}")
+print(f"Precio: ${Pizza.precio}")
+print(f"Tamaño: {Pizza.tipo}")
