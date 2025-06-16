@@ -1,2 +1,2 @@
-# Desafio-M-todos-y-atributos
+# Desafio-Metodos-y-atributos
 Desarrollo desafio consistente en pedidos en una cadena de pizzerias
