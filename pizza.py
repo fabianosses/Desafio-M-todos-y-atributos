@@ -19,40 +19,29 @@ class Pizza:
     self.ingredientes = [self.proteico, *self.vegetales, self.masa]
     return self.ingredientes
 
-mi_pizza = Pizza()
+  # solicita ingreso de proteina
+  proteico_seleccionado = None
+  while proteico_seleccionado not in ingredientes.proteicos:
+    proteico_seleccionado = input(f"Seleccione el ingrediente proteico {ingredientes.proteicos}: ")
+    if not validar_elemento_en_lista(proteico_seleccionado, ingredientes.proteicos):
+      print("Ingrediente proteico no válido. Por favor, seleccione de la lista.")
 
-# solicita ingreso de proteina
-proteico_seleccionado = None
-while proteico_seleccionado not in ingredientes.proteicos:
-  proteico_seleccionado = input(f"Seleccione el ingrediente proteico {ingredientes.proteicos}: ")
-  if not Pizza.validar_elemento_en_lista(proteico_seleccionado, ingredientes.proteicos):
-    print("Ingrediente proteico no válido. Por favor, seleccione de la lista.")
-
-# solicita ingreso de dos vegetales
-vegetales_seleccionados = []
-while len(vegetales_seleccionados) < 2:
-  vegetal_seleccionado = input(f"Seleccione un ingrediente vegetal {ingredientes.vegetales} ({len(vegetales_seleccionados) + 1} de 2): ")
-  if Pizza.validar_elemento_en_lista(vegetal_seleccionado, ingredientes.vegetales):
-    if vegetal_seleccionado not in vegetales_seleccionados:
-      vegetales_seleccionados.append(vegetal_seleccionado)
+  # solicita ingreso de dos vegetales
+  vegetales_seleccionados = []
+  while len(vegetales_seleccionados) < 2:
+    vegetal_seleccionado = input(f"Seleccione un ingrediente vegetal {ingredientes.vegetales} ({len(vegetales_seleccionados) + 1} de 2): ")
+    if validar_elemento_en_lista(vegetal_seleccionado, ingredientes.vegetales):
+      if vegetal_seleccionado not in vegetales_seleccionados:
+        vegetales_seleccionados.append(vegetal_seleccionado)
+      else:
+        print("Este vegetal ya ha sido seleccionado.")
     else:
-      print("Este vegetal ya ha sido seleccionado.")
-  else:
-    print("Ingrediente vegetal no válido. Por favor, seleccione de la lista.")
+      print("Ingrediente vegetal no válido. Por favor, seleccione de la lista.")
 
-# solicita ingreso de masa
-masa_seleccionada = None
-while masa_seleccionada not in ingredientes.masas:
-  masa_seleccionada = input(f"Seleccione el tipo de masa {ingredientes.masas}: ")
-  if not Pizza.validar_elemento_en_lista(masa_seleccionada, ingredientes.masas):
-    print("Masa no válida. Por favor, seleccione de la lista.")
-mi_pizza.pedido(masa_seleccionada, proteico_seleccionado, *vegetales_seleccionados)
+  # solicita ingreso de masa
+  masa_seleccionada = None
+  while masa_seleccionada not in ingredientes.masas:
+    masa_seleccionada = input(f"Seleccione el tipo de masa {ingredientes.masas}: ")
+    if not validar_elemento_en_lista(masa_seleccionada, ingredientes.masas):
+      print("Masa no válida. Por favor, seleccione de la lista.")
 
-# imprime selección de masa, proteina, vegetales, resumen de ingredientes, precio y tamaño
-print("\n--- Resumen de su Pedido ---")
-print(f"Masa seleccionada: {mi_pizza.masa}")
-print(f"Ingrediente proteico: {mi_pizza.proteico}")
-print(f"Ingredientes vegetales: {mi_pizza.vegetales}")
-print(f"Ingredientes totales: {mi_pizza.ingredientes}")
-print(f"Precio: ${Pizza.precio}")
-print(f"Tamaño: {Pizza.tipo}")
